@@ -77,6 +77,13 @@ class Database():
 
 
 
+    def get_user(self,nickname:str):
+        user = self.collection.find_one({"nickname": nickname}, {'_id': 0,'password':0})
+
+        return user
+
+
+
 
 
 
