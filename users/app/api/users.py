@@ -23,7 +23,23 @@ async def create_user(user:Create_User,Database=Depends(Database)):
     return a
 
 
+@router.delete('/user',tags=['users'])          # Обработка ошибок
+async def delete_user(nickname,password, Database = Depends(Database)):
+    Database.delete_account(nickname,password)
+
+
+@router.put('/user/password',tags=['users'])
+async def change_password(nickname,password,new_password, Database = Depends(Database)):
+    Database.change_password(nickname,password,new_password)
 
 
 
+@router.put('/user/country',tags=['users'])
+async def change_country(nickname,password,new_country, Database = Depends(Database)):
+    Database.change_country(new_country,password,nickname)
 
+
+
+@router.put('/user/city',tags=['users'])
+async def change_city(nickname,password,new_city, Database = Depends(Database)):
+    Database.change_country(new_city,password,nickname)
