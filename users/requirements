@@ -1,5 +1,0 @@
-fastapi
-pydantic
-pymongo
-uvicorn
-hashlib
