@@ -1,6 +1,7 @@
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter,Depends,HTTPException
 from .models import User,Create_User
 from .database import Database
+import hashlib
 router = APIRouter()
 
 
@@ -43,3 +44,15 @@ async def change_country(nickname,password,new_country, Database = Depends(Datab
 @router.put('/user/city',tags=['users'])
 async def change_city(nickname,password,new_city, Database = Depends(Database)):
     Database.change_country(new_city,password,nickname)
+
+
+@router.get('/user/password/{nickname}/{password}',tags=['users'])
+async def correct_password(nickname,password, Database = Depends(Database)):
+    hash1_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    hash2_password = Database.get_hash_password_by_nickname(nickname)
+
+    if hash1_password == hash2_password:
+        return 'correct'
+
+    else:
+        raise HTTPException(status_code=404, detail="incorrect")
