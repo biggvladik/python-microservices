@@ -83,6 +83,15 @@ class Database():
         return user
 
 
+    def get_hash_password_by_nickname(self,nickname:str):
+        user = self.collection.find_one({"nickname": nickname}, {'_id': 0,'nickname':0,'country':0,'city':0})
+        return user['password']
+
+
+
+
+
+
 
 
 
