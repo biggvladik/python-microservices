@@ -1,26 +1,22 @@
-version: "3"
+version: "3.8"
+
 services:
-
-  users:
-    container_name: users
-    build: ./users
-    ports:
-      - "80:80"
-    depends_on:
-      - mongodb_container
-
-  mongodb_container:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodb_data_container:/data/db
-
+    api:
+        build: ./map
+        ports:
+            - 80:80
+        environment:
+            - DB_URL=mongodb://test_database/map
+        volumes:
+            - ./map:/map
+    db:
+        image: mongo
+        ports:
+            - 27017:27017
+        volumes:
+            - taskdb:/data/db
 volumes:
-  mongodb_data_container:
+    taskdb:
 
 
 
