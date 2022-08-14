@@ -13,7 +13,15 @@ class Database():
 
 
 
-   # def get_coordinates_by_nickname(self,nickname) -> List
+    def get_coordinates_by_nickname(self,nickname):
+        return self.collection.find_one({'nickname':nickname},{'_id':0,'email':0})
+
+
+
+
+A=Database()
+
+print(A.get_coordinates_by_nickname('biggvladik'))
 
 
 

@@ -1,5 +1,22 @@
-from fastapi import FastAPI
+from fastapi import APIRouter,Depends
+from ..models.map import Place,Place_get
+from ..Database.map import Database
 
-app =FastAPI()
+router = APIRouter()
+
+@router.get('/{nickname}',response_model=Place_get)
+async def get_place(nickname:str,Database = Depends(Database)):
+    res = Database.get_coordinates_by_nickname(nickname)
+    place = Place_get(
+        nickname = res['nickname'],
+        coordinates = res['coordinates']
+
+    )
+    return place
+
+
+@router.post('/')
+async def create_place(place:Place):
+
 
 
